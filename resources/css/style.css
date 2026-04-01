@@ -1,0 +1,308 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: #ffffff;
+    font-family: 'Source Serif 4', serif;
+    min-height: 100vh;
+  }
+
+h1 {
+    font-size: 15vw;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 0.2em;
+    letter-spacing: 0.04em;
+    color:rgba(106, 17, 17, 0.9)
+  }
+
+  h2 {
+    font-size: clamp(14px, 4vw, 35px);
+    font-weight: 250;;
+    text-align: center;
+    margin-bottom: 1.5em;
+    letter-spacing: 0.1em;  /* spread characters apart */
+    word-spacing: 1vw;  
+    color:rgba(106, 17, 17)
+}
+
+  /* ── Desktop wrapper with fluid margins ── */
+  .page {
+    /* Horizontal padding: 0 on mobile, grows to 64px on wide screens */
+    padding: clamp(0px, 5vw, 64px);
+    padding-top: clamp(0px, 3vw, 40px);
+    padding-bottom: clamp(0px, 3vw, 40px);
+  }
+
+  /* Title parts: inline on desktop, stacked on mobile */
+  .title-part {
+    display: inline;
+  }
+  .subtitle-part {
+    display: inline;
+  }
+
+  /* Remove all padding on small screens */
+  @media (max-width: 500px) {
+    .page {
+      padding: 0;
+    }
+    h1{
+      font-size: 25vw;
+    }
+
+    /* Stack title: PETRO / NELLA */
+    .title-part {
+      display: block;
+    }
+    .subtitle-part {
+      display: block;
+    }
+
+    /* Reorder banners: 1 & 3 top (half-width), 2 bottom (full-width) */
+    .banner {
+      flex-wrap: wrap;
+    }
+
+    #frame1 {
+      width: 50%;
+      order: 1;
+    }
+
+    #frame3 {
+      width: 50%;
+      order: 2;
+    }
+
+    #frame2 {
+      width: 100%;
+      order: 3;
+    }
+  }
+
+  .banner {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    line-height: 0;
+    font-size: 0;
+  }
+
+  .frame {
+    position: relative;
+    width: 33.333%;
+  }
+
+  .frame canvas,
+  .frame img {
+    display: block;
+    width: 100%;
+  }
+
+  .play-btn {
+    position: absolute;
+    bottom: 48%;
+    left: 53%;
+    transform: translateX(-50%);
+    /* Button scales fluidly: 28px on mobile up to 48px on desktop */
+    width: clamp(25px, 3vw, 40px);
+    height: clamp(25px, 3vw, 40px);
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    background: rgba(0, 0, 0, 0.154);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s, transform 0.15s;
+    z-index: 10;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 0;
+  }
+
+  .play-btn:hover {
+    background: rgba(0, 0, 0, 0.2);
+    transform: translateX(-50%) scale(1.08);
+  }
+
+  .play-btn svg {
+    display: block;
+    /* Icon scales with button */
+    width: clamp(9px, 1.4vw, 16px);
+    height: clamp(9px, 1.4vw, 16px);
+  }
+
+a {
+  color: inherit;
+}
+
+  .signup-btn {
+    position: absolute;
+    top: 45%;
+    left: 52%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    background: rgba(106, 17, 17, 0.5);
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    padding: 1em 1em;
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(13px, 1.6vw, 20px);
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: 0.2s, transform 0.15s;
+    text-decoration: none;
+    text-align: center;
+    max-width: calc(100% - 2rem);
+    white-space: normal;
+    line-height: 1.4;
+  }
+ 
+
+  .signup-btn:hover {
+    background: rgba(106, 17, 17, 0.7);
+  }
+
+  footer {
+    text-align: center;
+    padding: 1em 0;
+    /*clamp(minimum, preferred, maximum)*/
+    font-size: clamp(8px, 0.5em, 14px);
+    color: #555;
+  }
+
+  /* ── Hamburger button ── */
+  .hamburger {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 200;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: rgba(106, 17, 17, 0.9);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    transform-origin: center;
+  }
+
+  .hamburger.open span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.open span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  /* ── Side pane overlay ── */
+  .side-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.12);
+    z-index: 140;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+
+  .side-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* ── Side pane ── */
+  .side-pane {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(340px, 88vw);
+    height: 100vh;
+    background: #fff;
+    z-index: 150;
+    transform: translateX(100%);
+    transition: transform 0.35s ease;
+    padding: 64px 32px 32px;
+    overflow-y: auto;
+  }
+
+  .side-pane.open {
+    transform: translateX(0);
+  }
+
+  .side-section + .side-section {
+    border-top: 1px solid rgba(106, 17, 17, 0.12);
+  }
+
+  .side-heading {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(14px, 1.5vw, 17px);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: rgba(106, 17, 17, 0.9);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 1em 0;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+  }
+
+  .side-heading::after {
+    content: '+';
+    font-weight: 300;
+    font-size: 1.1em;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+    display: inline-block;
+  }
+
+  .side-heading.active::after {
+    transform: rotate(45deg);
+  }
+
+  /* ── Collapsible sections inside pane ── */
+  .side-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s ease;
+  }
+
+  .side-content.open {
+    grid-template-rows: 1fr;
+  }
+
+  .side-content-inner {
+    overflow: hidden;
+  }
+
+  .side-content-inner p {
+    font-size: clamp(12px, 1.3vw, 15px);
+    font-weight: 300;
+    color: rgba(106, 17, 17, 0.8);
+    letter-spacing: 0.03em;
+    line-height: 1.75;
+    padding-bottom: 1.2em;
+  }
