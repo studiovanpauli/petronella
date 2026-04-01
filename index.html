@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Petronella</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="resources/css/style.css">
+</head>
+<body>
+
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="side-overlay" id="sideOverlay"></div>
+
+  <aside class="side-pane" id="sidePane" aria-hidden="true">
+
+    <div class="side-section">
+      <button class="side-heading" id="headingAbout">about</button>
+      <div class="side-content" id="contentAbout">
+        <div class="side-content-inner">
+          <p>Petronella is an interactive story set across Eindhoven, created for local residents. Journey into the past and follow the story of Petronella, along with another city explorer, a person you might or might not have seen around before.
+
+            The development of this interactive story was made possible by the <a href="https://www.impactmakerscommunity.nl/fund"  target="_blank"> stadsmakers community fonds</a>.
+          </p> 
+        </div>
+      </div>
+    </div>
+
+    <div class="side-section">
+      <button class="side-heading" id="headingContact">contact</button>
+      <div class="side-content" id="contentContact">
+        <div class="side-content-inner">
+          <p>This interactive story is developed by studio vanpauli. You can contact me at studiovanpauli@proton.me.</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="side-section">
+      <button class="side-heading" id="headingFaq">frequently asked questions</button>
+      <div class="side-content" id="contentFaq">
+        <div class="side-content-inner">
+          <p><strong>How do I participate?</strong><br>Sign up via the button in the banner, you are asked for your availabilities during an average week. Once someone else signs up with similar availabilities you will be sent further instructions.</p>
+          <p><strong>Is it free?</strong><br>Yes, Petronella is a free experience open to everyone.</p>
+          <p><strong>Can I play alone?</strong><br>No, the story is made to be experienced in groups of two. You will be matched with someone else that has also signed up. </p>
+          <p><strong>What if I don't want to play with a stranger?</strong><br>
+          In the case that you would like to play it with your family, or in the case that you do not live in Eindhoven you can request to play the game with the person/people of your choice. </p>
+          <p><strong>How long does it take?</strong><br>You can go through the story at your own pace. Most participants spend around two hours to complete the story.</p>
+          <p><strong>How accessible is the story?</strong><br>Participants move through the city on foot. All locations are wheelchair accessible, and no special physical movements are required. The story format on the phone is screen reader compatible, but physical props do not include additional support for those with visual impairments. </p>
+          <p><strong>Do I need anything special?</strong><br>No, you only need a phone with internet to download the initial story file at the beginning.</p>
+    
+        
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <div class="page">
+    <h1><span class="title-part">PETRO</span><span class="title-part">NELLA</span></h1>
+    <h2><span class="subtitle-part">an interactive story </span><span class="subtitle-part">throughout Eindhoven</span></h2>
+
+
+  <div class="banner">
+
+    <div class="frame" id="frame1">
+      <canvas id="canvas1"></canvas>
+      <img id="img1" src="resources/images/BluePhoneFinal.gif" alt="Ringing blue phone" style="display:none;">
+      <button class="play-btn" id="btn1" aria-label="Play">
+        <svg id="icon1" width="16" height="16" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="4,2 14,8 4,14"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="frame" id="frame2">
+      <canvas id="canvas2"></canvas>
+      <img id="img2" src="resources/images/MapFinal.gif" alt="Person looking at a map" style="display:none;">
+      <a href="https://tally.so/r/lbAvJ6" class="signup-btn">sign up to play</a>
+    </div>
+
+    <div class="frame" id="frame3">
+      <canvas id="canvas3"></canvas>
+      <img id="img3" src="resources/images/LetterFinal.gif" alt="Letter coming out of an envelope" style="display:none;">
+      <button class="play-btn" id="btn3" aria-label="Play">
+        <svg id="icon3" width="16" height="16" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="4,2 14,8 4,14"/>
+        </svg>
+      </button>
+
+    </div>
+
+  </div>
+    <footer>
+      <p>
+        &copy; 2026 studio vanpauli. All rights reserved.
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    const PLAY_ICON = `<polygon points="4,2 14,8 4,14"/>`;
+    const PAUSE_ICON = `<rect x="3" y="2" width="4" height="12"/><rect x="9" y="2" width="4" height="12"/>`;
+    const states = { 1: 'paused', 2: 'paused', 3: 'paused' };
+
+    function initFrame(i) {
+  const img = document.getElementById(`img${i}`);
+  const canvas = document.getElementById(`canvas${i}`);
+
+  // Start playing immediately
+  canvas.style.display = 'none';
+  img.style.display = 'block';
+  states[i] = 'playing';
+
+  // Update button icon to pause
+  const icon = document.getElementById(`icon${i}`);
+  if (icon) icon.innerHTML = PAUSE_ICON;
+  const btn = document.getElementById(`btn${i}`);
+  if (btn) btn.setAttribute('aria-label', 'Pause');
+
+  // Still set up canvas dimensions for when the user pauses
+  img.addEventListener('load', function () {
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    canvas.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
+  });
+}
+
+    function togglePlay(i) {
+      const img = document.getElementById(`img${i}`);
+      const canvas = document.getElementById(`canvas${i}`);
+      const btn = document.getElementById(`btn${i}`);
+      const icon = document.getElementById(`icon${i}`);
+
+      if (states[i] === 'paused') {
+        canvas.style.display = 'none';
+        img.style.display = 'block';
+        // Restart the APNG from the first frame
+        const src = img.src;
+        img.src = '';
+        img.src = src;
+        states[i] = 'playing';
+        btn.setAttribute('aria-label', 'Pause');
+        icon.innerHTML = PAUSE_ICON;
+      } else {
+        // Freeze current frame onto canvas
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        canvas.style.display = 'block';
+        img.style.display = 'none';
+        states[i] = 'paused';
+        btn.setAttribute('aria-label', 'Play');
+        icon.innerHTML = PLAY_ICON;
+      }
+    }
+
+    [1, 2, 3].forEach(i => {
+  initFrame(i);
+  const btn = document.getElementById(`btn${i}`);
+  if (btn) btn.addEventListener('click', () => togglePlay(i));
+});
+
+    // ── Side pane ──
+    const hamburger = document.getElementById('hamburger');
+    const sidePane = document.getElementById('sidePane');
+    const sideOverlay = document.getElementById('sideOverlay');
+    const headingAbout = document.getElementById('headingAbout');
+    const headingFaq = document.getElementById('headingFaq');
+    const headingContact = document.getElementById('headingContact');
+    const contentAbout = document.getElementById('contentAbout');
+    const contentFaq = document.getElementById('contentFaq');
+    const contentContact = document.getElementById('contentContact');
+
+    function openPane() {
+      sidePane.classList.add('open');
+      sideOverlay.classList.add('open');
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded', true);
+      sidePane.setAttribute('aria-hidden', false);
+    }
+
+    function closePane() {
+      sidePane.classList.remove('open');
+      sideOverlay.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', false);
+      sidePane.setAttribute('aria-hidden', true);
+    }
+
+    hamburger.addEventListener('click', () => {
+      sidePane.classList.contains('open') ? closePane() : openPane();
+    });
+
+    sideOverlay.addEventListener('click', closePane);
+
+    function toggleSection(content, heading) {
+      const isOpen = content.classList.toggle('open');
+      heading.classList.toggle('active', isOpen);
+    }
+
+    headingAbout.addEventListener('click', () => toggleSection(contentAbout, headingAbout));
+    headingFaq.addEventListener('click', () => toggleSection(contentFaq, headingFaq));
+    headingContact.addEventListener('click', () => toggleSection(contentContact, headingContact));
+  </script>
+</body>
+</html>
