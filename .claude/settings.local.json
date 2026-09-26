@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find '/Users/paulinevantilt/Documents/3. Studio_vanpauli/4.1 Petronella/_WebsitePetronella' -type f ! -name .*)"
+    ]
+  }
+}
